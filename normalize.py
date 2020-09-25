@@ -104,7 +104,7 @@ nz_descriptions = []
 nz_input_tickets = []
 cnames = []
 
-out = open('out.txt', 'w', encoding='utf8')
+
 print('Normalizing...')
 for i,ticket in enumerate(tickets):
     print(i)
