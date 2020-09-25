@@ -1,6 +1,6 @@
 <p align="center">
   <a href="http://projector.tensorflow.org/">
-    <img src="./ml_logo.png" alt="Bootstrap logo" width="200" height="165">
+    <img src="./ml_logo.png" alt="ml_logo" width="200" height="165">
  </a>
 </p>
 
