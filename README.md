@@ -6,7 +6,9 @@
 
 <p>Second step in machine learning is to normalize training data.</p>
 
-<p>To normilize training data we use: lemmatization, reqular expressions and stop words</p>
+<p>First of all we need row data: https://github.com/ochirovaur2/ochirovaur2-get_row_data_for_machine_learning_from_jira_database</p>
+
+<p>To normalize training data we use: lemmatization, reqular expressions and stop words</p>
 
 
 <p>The result of the script execution is the following data in JSON: </p>
