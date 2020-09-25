@@ -10,6 +10,7 @@
 
 
 <p>The result of the script execution is the following data in JSON: </p>
+<p></p>
 <p>nz_input_tickets is input information </p>
 <p>cnames is labels </p>
 <code>
