@@ -12,7 +12,7 @@
 <p>The result of the script execution is the following data in JSON: </p>
 <p>nz_input_tickets is input information </p>
 <p>cnames is labels </p>
-```
+<code>
 {
     "nz_input_tickets": [
         "contract день внести новое сотрудник программу ширяев александр фёдорович п п 9253486 курьер"
@@ -21,4 +21,4 @@
         "Доступ пользователя / Создание нового пользователя"
     ]
 }
-```
+</code>
