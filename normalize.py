@@ -10,7 +10,7 @@ from stop_words import stop_words
 morph = pymorphy2.MorphAnalyzer()
 
 
-data = json.load(open('issues_with_comments_2020-09-01_2020-09-02.json', encoding='utf8'))
+data = json.load(open('./data/input/issues_with_comments_2020-09-01_2020-09-02.json', encoding='utf8'))
 
 tickets = data['data']
 
@@ -68,10 +68,8 @@ def sentence_to_normalized_words(sentence):
     normalized_words = [morph.parse(w)[0].normal_form for w in arr]
     sentence = " ".join(normalized_words)
     sentence = re.sub(r'\d{8,10}', 'order', sentence)
-    sentence = re.sub(r'{color:#[0-9a-f]+}', "", sentence)
-    sentence = re.sub(r'{color:[\w]+}', "", sentence)
-    sentence = re.sub(r'{color}', "", sentence)
-    sentence = re.sub(r'{quote}', "", sentence) 
+    sentence = re.sub(r'{[a-zA-Z0-9_.+-:#]+}', "", sentence)
+    sentence = re.sub(r'<[a-zA-Z0-9_.+-:#]+>', "", sentence)
     sentence = re.sub(r'([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)', "email", sentence)
     sentence = re.sub(r'(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?','URL', sentence)
     sentence = re.sub(r'www','', sentence)
@@ -123,7 +121,7 @@ for i,ticket in enumerate(tickets):
     
 
 data_prepared = {'nz_input_tickets': nz_input_tickets,'cnames': cnames}
-fname = 'data_prepared.json'
+fname = './data/output/data_prepared.json'
 
 print(f'Saving prepared data into: {fname}')
 json.dump(data_prepared, open(fname, 'w', encoding='utf8'), indent=4, ensure_ascii=False)
