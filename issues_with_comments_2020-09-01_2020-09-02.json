@@ -1,0 +1,26 @@
+{
+    "data": [
+        {
+            "created": "2020-09-01 00:08:02",
+            "issuenum": 344688,
+            "summary": "Владимир1",
+            "description": "Добрый день! Просьба внести нового сотрудника в программу: Ширяев Александр Фёдорович, п.п 9253486, курьер. Спасибо.",
+            "creator": "a.savostikova",
+            "cname": "Доступ пользователя / Создание нового пользователя",
+            "issuetype": "10900",
+            "actionbody": "Добрый день.  Сотрудник добавлен.",
+            "actiontype": "comment",
+            "action_author": "v.kumanovsky",
+            "action_date": "2020-09-03 05:31:59",
+            "actions": [
+                {
+                    "author": "v.kumanovsky",
+                    "date": "2020-09-03 05:31:59",
+                    "body": "Добрый день.  Сотрудник добавлен."
+                }
+            ]
+        }
+    ],
+    "sql": "SELECT ji.created, ji.issuenum, ji.summary, ji.description, ji.creator, c.cname, \nji.issuetype,\nja.actionbody, \nja.actiontype, \nja.author  as action_author, \nja.created  as action_date\nFROM jiraissue ji\n    INNER JOIN nodeassociation na ON ji.id = na.source_node_id\n    INNER JOIN component c ON na.sink_node_id = c.id\n    INNER JOIN jiraaction ja on ja.issueid=ji.id\n    WHERE ji.project = '11000' \n        AND ji.created between '2020-09-01' and '2020-09-02'\n            ORDER BY created asc limit 1",
+    "request_time": "2020-09-24 10:53:47"
+}
