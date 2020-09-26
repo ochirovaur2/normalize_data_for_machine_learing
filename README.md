@@ -27,7 +27,7 @@
 </code>
 
 
-<p>nz_input_tickets == input information </p>
+<p >nz_input_tickets == input information </p>
 <p>cnames == labels </p>
 
 
