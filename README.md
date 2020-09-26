@@ -11,6 +11,7 @@
 <p>To normalize training data we use: lemmatization, reqular expressions and stop words</p>
 
 
+
 <p>The result of the script execution is the following data in JSON: </p>
 <p></p>
 <p>nz_input_tickets == input information </p>
@@ -25,3 +26,5 @@
     ]
 }
 </code>
+
+<p>The code is written for Python 3.8</p>
