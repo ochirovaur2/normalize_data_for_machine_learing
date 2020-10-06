@@ -6,15 +6,15 @@
 
 <p>Second step in machine learning is to normalize training data.</p>
 
-<p>First of all we need row data: https://github.com/ochirovaur2/ochirovaur2-get_row_data_for_machine_learning_from_jira_database</p>
+<p>But before we start, we need the row data: https://github.com/ochirovaur2/ochirovaur2-get_row_data_for_machine_learning_from_jira_database</p>
 
 <p>To normalize training data we use: lemmatization, reqular expressions and stop words</p>
 
 
+
 <p>The result of the script execution is the following data in JSON: </p>
 <p></p>
-<p>nz_input_tickets is input information </p>
-<p>cnames is labels </p>
+
 <code>
 {
     "nz_input_tickets": [
@@ -25,3 +25,11 @@
     ]
 }
 </code>
+
+
+<p style="margin-top: 20px">nz_input_tickets == input information </p>
+<p>cnames == labels </p>
+
+
+
+<p>The code is written for Python 3.8</p>
