@@ -6,11 +6,11 @@ from city_names import city_names
 from stop_words import stop_words
 
 
-
+limit = 5000000
 morph = pymorphy2.MorphAnalyzer()
 
 
-data = json.load(open('./data/input/issues_with_comments_2020-09-01_2020-09-02.json', encoding='utf8'))
+data = json.load(open('./data/input/issues_with_comments_2017-09-01_2020-09-25.json', encoding='utf8'))
 
 tickets = data['data']
 
@@ -34,26 +34,26 @@ def sentence_to_normalized_words(sentence):
     arr = sentence.split(" ")
     num_i = 0
     for word in arr:     
-        if word.find("им") != -1 or word.find("ку") != -1:
+    #     if word.find("им") != -1 or word.find("ку") != -1:
 
-            washed_word = re.findall(r'им[\w\d-]+', word)
-            if len(washed_word) > 0:
+    #         washed_word = re.findall(r'им[\w\d-]+', word)
+    #         if len(washed_word) > 0:
                 
-                is_contract = re.findall('\d',washed_word[0])
-                if len(is_contract) > 0:
+    #             is_contract = re.findall('\d',washed_word[0])
+    #             if len(is_contract) > 0:
                     
                    
-                    arr[num_i] = "contract"
+    #                 arr[num_i] = "contract"
                     
 
-            washed_word = re.findall(r'ку[\w\d-]+', word)
-            if len(washed_word) > 0:
+    #         washed_word = re.findall(r'ку[\w\d-]+', word)
+    #         if len(washed_word) > 0:
                 
-                is_contract = re.findall('\d',washed_word[0])
-                if len(is_contract) > 0:
+    #             is_contract = re.findall('\d',washed_word[0])
+    #             if len(is_contract) > 0:
                     
                     
-                    arr[num_i] = "contract"
+    #                 arr[num_i] = "contract"
                     
 
         if word.find('сч-') != -1:
@@ -63,26 +63,27 @@ def sentence_to_normalized_words(sentence):
                 
                 arr[num_i] = "kreditcontrol"
                 
-        num_i +=1
+    #     num_i +=1
 
     normalized_words = [morph.parse(w)[0].normal_form for w in arr]
     sentence = " ".join(normalized_words)
-    sentence = re.sub(r'\d{8,10}', 'order', sentence)
+    sentence = re.sub(r'\d{8,10}', '', sentence)
     sentence = re.sub(r'{[a-zA-Z0-9_.+-:#]+}', "", sentence)
     sentence = re.sub(r'<[a-zA-Z0-9_.+-:#]+>', "", sentence)
-    sentence = re.sub(r'([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)', "email", sentence)
-    sentence = re.sub(r'(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?','URL', sentence)
+    sentence = re.sub(r'<.*?>', "", sentence)
+    # sentence = re.sub(r'([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)', "email", sentence)
+    # sentence = re.sub(r'(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?','URL', sentence)
     sentence = re.sub(r'www','', sentence)
-    sentence = re.sub(r'[\n\r .,()":?!]+', ' ', sentence) 
+    sentence = re.sub(r'[\n\r .,()":?!]+', '', sentence) 
     sentence = sentence.strip()
     sentence_arr = re.findall(r'[\w\d-]+', sentence)
     sentence = ' '.join(sentence_arr)
     arr = sentence.split(" ")
     num_i = 0
     for word in arr:
-        if word in city_names_arr:
+        # if word in city_names_arr:
             
-            arr[num_i] = "city"
+        #     arr[num_i] = "city"
             
         if word in stop_words_arr:
             try:
@@ -106,18 +107,20 @@ cnames = []
 
 
 print('Normalizing...')
+
 for i,ticket in enumerate(tickets):
-    print(i)
-    if i%1000 == 0: 
+    
+    if i < limit:
+        
         print(f'#{i}/{len(tickets)}')
-    description = ticket['description'] or ''
-    summary = ticket['summary'] or ''
-    temp_str = f'{str(sentence_to_normalized_words(summary))} {str(sentence_to_normalized_words(description))}'
-    nz_input_tickets.append(temp_str)
-    temp_str = ""
-    
-    
-    cnames.append(ticket['cname'])
+        description = ticket['description'] or ''
+        summary = ticket['summary'] or ''
+        temp_str = f'{str(sentence_to_normalized_words(summary))} {str(sentence_to_normalized_words(description))}'
+        nz_input_tickets.append(temp_str)
+        temp_str = ""
+        
+        
+        cnames.append(ticket['cname'])
     
 
 data_prepared = {'nz_input_tickets': nz_input_tickets,'cnames': cnames}
