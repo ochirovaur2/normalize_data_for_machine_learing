@@ -6,11 +6,11 @@ from city_names import city_names
 from stop_words import stop_words
 
 
-limit = 5000000
+limit = 10
 morph = pymorphy2.MorphAnalyzer()
 
 
-data = json.load(open('./data/input/issues_with_comments_2017-09-01_2020-09-25.json', encoding='utf8'))
+data = json.load(open('./data/input/issues_with_comments_2020-01-01_2020-09-25.json', encoding='utf8'))
 
 tickets = data['data']
 
@@ -74,7 +74,7 @@ def sentence_to_normalized_words(sentence):
     # sentence = re.sub(r'([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)', "email", sentence)
     # sentence = re.sub(r'(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?','URL', sentence)
     sentence = re.sub(r'www','', sentence)
-    sentence = re.sub(r'[\n\r .,()":?!]+', '', sentence) 
+    sentence = re.sub(r'[\n\r .,()":?!]+', ' ', sentence) 
     sentence = sentence.strip()
     sentence_arr = re.findall(r'[\w\d-]+', sentence)
     sentence = ' '.join(sentence_arr)
@@ -92,11 +92,12 @@ def sentence_to_normalized_words(sentence):
                 continue
         
     
-            
+      
         
     sentence = " ".join(arr)
     arr = sentence.split()
     sentence = " ".join(arr)
+
     return sentence
     
 
@@ -104,7 +105,7 @@ nz_summarys = []
 nz_descriptions = []
 nz_input_tickets = []
 cnames = []
-
+dates = []
 
 print('Normalizing...')
 
@@ -121,9 +122,9 @@ for i,ticket in enumerate(tickets):
         
         
         cnames.append(ticket['cname'])
-    
+        dates.append(ticket["created"])
 
-data_prepared = {'nz_input_tickets': nz_input_tickets,'cnames': cnames}
+data_prepared = {'nz_input_tickets': nz_input_tickets,'cnames': cnames, 'dates': dates}
 fname = './data/output/data_prepared.json'
 
 print(f'Saving prepared data into: {fname}')
